@@ -1,0 +1,6 @@
+spring.data.mongodb.uri=xxx
+spring.data.mongodb.database=xxx
+spring.data.mongodb.username=xxx
+spring.data.mongodb.password=xxx
+CONNECTIONSTRING=xxx
+DATABASENAME=xxx
