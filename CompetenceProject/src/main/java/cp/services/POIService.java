@@ -29,8 +29,8 @@ public class POIService {
         if (poiRepository.findById(id).isPresent()) {
             return poiRepository.findById(id).get();
         }
-        log.error("Person with id: " + id + " not found");
-        throw new POINotFoundException("Person not found");
+        log.error("POI with id: " + id + " not found");
+        throw new POINotFoundException();
     }
 
     public List<POI> getAll() {
