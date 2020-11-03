@@ -19,9 +19,8 @@ import java.util.List;
 public class TraceService {
     private final TraceRepository traceRepository;
 
-    public void addTrace(Trace trace) {
-        System.out.println(trace.getTimeOfEntry());
-        traceRepository.insert(trace);
+    public Trace addTrace(Trace trace) {
+        return traceRepository.insert(trace);
     }
 
     public Trace get(String id) throws TraceNotFoundException {
@@ -34,12 +33,17 @@ public class TraceService {
     }
 
     public List<Trace> getAll() {
-
         List<Trace> traces = traceRepository.findAll();
-        System.out.println(traces);
         return traces;
     }
 
+    public List<Trace> getAllWithUserId(String userId) {
+        return traceRepository.findByUserId(userId);
+    }
+
+    public List<Trace> getAllWithPOIId(String poiId) {
+        return traceRepository.findByPoiId(poiId);
+    }
 
     public Trace delete(String id) throws TraceNotFoundException {
         Trace poiFromDB = get(id);
@@ -50,5 +54,4 @@ public class TraceService {
     public void deleteAll() {
         traceRepository.deleteAll();
     }
-
 }
