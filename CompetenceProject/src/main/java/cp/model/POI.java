@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 /*
 Example JSON
@@ -29,6 +33,9 @@ https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/
 @NoArgsConstructor
 public @Data
 class POI {
+    @Id
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
     public String name;
     public String description;
     public GeoJsonPoint position;

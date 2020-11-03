@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 /*
 Example JSON
@@ -23,6 +26,9 @@ Example JSON
 @NoArgsConstructor
 public @Data
 class Trace {
+    @Id
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
     public String userId;
     public String poiId;
     public POI visitedPOI;
