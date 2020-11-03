@@ -31,22 +31,17 @@ public class PersonService {
     }
 
     public Person updatePerson(String id, PersonDto personDto) throws PersonNotFoundException {
-        if (personRepository.findById(id).isPresent()) {
-            Person personToSave = PersonMapper.mapFromDto(personDto);
-            personToSave.setId(id);
-            return personRepository.save(personToSave);
-        }
-        log.error("Person with id: " + id + " not found");
-        throw new PersonNotFoundException("Person not found");
+        Person personFromDB = getPerson(id);
+        Person personToSave = PersonMapper.mapFromDto(personDto);
+        personToSave.setId(personFromDB.getId());
+        return personRepository.save(personToSave);
+
     }
 
     public Person deletePerson(String id) throws PersonNotFoundException {
-        if (personRepository.findById(id).isPresent()) {
-            Person person = personRepository.findById(id).get();
-            personRepository.delete(person);
-            return person;
-        }
-        log.error("Person with id: " + id + " not found");
-        throw new PersonNotFoundException("Person not found");
+        Person personFromDB = getPerson(id);
+        personRepository.delete(personFromDB);
+        return personFromDB;
+
     }
 }
