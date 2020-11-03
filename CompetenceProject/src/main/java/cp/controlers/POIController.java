@@ -8,18 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/*
-Example JSON
-{
-    "name": "test2",
-    "position": {
-        "type": "Point",
-        "coordinates": [10,10]
-    },
-    "description": "students",
-    "type": "indoor"
-}
- */
 @RestController
 @AllArgsConstructor
 public class POIController {
@@ -27,9 +15,6 @@ public class POIController {
 
     @PostMapping("/poi")
     public void addPOI(@RequestBody POI poi) {
-//        System.out.println(poi);
-//        poi.setPosition(new GeoJsonPoint(5,10));
-//        System.out.println(poi);
         poiService.addPOI(poi);
     }
 }

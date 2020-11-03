@@ -21,10 +21,6 @@ Example JSON
 @NoArgsConstructor
 public @Data
 class Person {
-    @Id
-    @Builder.Default
-    private String id = UUID.randomUUID().toString();
     private String phoneNumber;
     private Profile profile;
-
 }
