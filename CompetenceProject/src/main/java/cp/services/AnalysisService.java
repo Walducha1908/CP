@@ -16,13 +16,13 @@ public class AnalysisService {
      * By frequent users, lengths of stay etc.
      */
     public void clusterPOIs () throws Exception {
-        throw new Exception("Not implemented");
+        throw new Exception("Clustering not implemented");
     }
     /**
      * Rank POIs by ??
      */
     public void rankPOIs () throws Exception {
-        throw new Exception("Not implemented");
+        throw new Exception("Ranking not implemented");
     }
 
     /**
@@ -32,6 +32,6 @@ public class AnalysisService {
      * @throws Exception
      */
     public POI calculateMostVisited(POI givenPoi) throws Exception {
-        throw new Exception("Not implemented");
+        throw new Exception("Calculation not implemented");
     }
 }
