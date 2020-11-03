@@ -38,4 +38,14 @@ public class PersonController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
+
+    @DeleteMapping("/person/{id}")
+    @ResponseBody
+    public ResponseEntity deletePerson(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(personService.deletePerson(id));
+        } catch (PersonNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
 }

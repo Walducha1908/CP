@@ -39,4 +39,14 @@ public class PersonService {
         log.error("Person with id: " + id + " not found");
         throw new PersonNotFoundException("Person not found");
     }
+
+    public Person deletePerson(String id) throws PersonNotFoundException {
+        if (personRepository.findById(id).isPresent()) {
+            Person person = personRepository.findById(id).get();
+            personRepository.delete(person);
+            return person;
+        }
+        log.error("Person with id: " + id + " not found");
+        throw new PersonNotFoundException("Person not found");
+    }
 }
