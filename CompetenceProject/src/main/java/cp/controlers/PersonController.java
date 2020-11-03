@@ -15,25 +15,32 @@ public class PersonController {
     private final PersonService personService;
 
     @PostMapping("/person")
-    public void addPerson(@RequestBody Person person) {
-        personService.addPerson(person);
+    @ResponseBody
+    public ResponseEntity add(@RequestBody Person person) {
+        return ResponseEntity.ok(personService.add(person));
     }
 
     @GetMapping("/person/{id}")
     @ResponseBody
-    public ResponseEntity getPerson(@PathVariable String id) {
+    public ResponseEntity get(@PathVariable String id) {
         try {
-            return ResponseEntity.ok(personService.getPerson(id));
+            return ResponseEntity.ok(personService.get(id));
         } catch (PersonNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
 
+    @GetMapping("/person")
+    @ResponseBody
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(personService.getAll());
+    }
+
     @PutMapping("/person/{id}")
     @ResponseBody
-    public ResponseEntity getPerson(@PathVariable String id, @RequestBody PersonDto personDto) {
+    public ResponseEntity get(@PathVariable String id, @RequestBody PersonDto personDto) {
         try {
-            return ResponseEntity.ok(personService.updatePerson(id, personDto));
+            return ResponseEntity.ok(personService.update(id, personDto));
         } catch (PersonNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
@@ -41,9 +48,9 @@ public class PersonController {
 
     @DeleteMapping("/person/{id}")
     @ResponseBody
-    public ResponseEntity deletePerson(@PathVariable String id) {
+    public ResponseEntity delete(@PathVariable String id) {
         try {
-            return ResponseEntity.ok(personService.deletePerson(id));
+            return ResponseEntity.ok(personService.delete(id));
         } catch (PersonNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,12 +17,11 @@ import java.util.Optional;
 public class PersonService {
     private final PersonRepository personRepository;
 
-    public void addPerson(Person person) {
-        personRepository.insert(person);
+    public Person add(Person person) {
+        return personRepository.insert(person);
     }
 
-    public Person getPerson(String id) throws PersonNotFoundException {
-        System.out.println(personRepository.findAll());
+    public Person get(String id) throws PersonNotFoundException {
         if (personRepository.findById(id).isPresent()) {
             return personRepository.findById(id).get();
         }
@@ -30,18 +29,20 @@ public class PersonService {
         throw new PersonNotFoundException("Person not found");
     }
 
-    public Person updatePerson(String id, PersonDto personDto) throws PersonNotFoundException {
-        Person personFromDB = getPerson(id);
+    public Person update(String id, PersonDto personDto) throws PersonNotFoundException {
+        Person personFromDB = get(id);
         Person personToSave = PersonMapper.mapFromDto(personDto);
         personToSave.setId(personFromDB.getId());
         return personRepository.save(personToSave);
-
     }
 
-    public Person deletePerson(String id) throws PersonNotFoundException {
-        Person personFromDB = getPerson(id);
+    public Person delete(String id) throws PersonNotFoundException {
+        Person personFromDB = get(id);
         personRepository.delete(personFromDB);
         return personFromDB;
+    }
 
+    public List<Person> getAll() {
+        return personRepository.findAll();
     }
 }
