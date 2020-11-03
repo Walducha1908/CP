@@ -33,7 +33,6 @@ class Trace {
     private String id = UUID.randomUUID().toString();
     public String userId;
     public String poiId;
-    public POI visitedPOI;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public LocalDateTime timeOfEntry;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

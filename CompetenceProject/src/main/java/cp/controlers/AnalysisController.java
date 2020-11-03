@@ -18,7 +18,6 @@ public class AnalysisController {
 
     private final AnalysisService analysisService;
 
-
     @GetMapping("/cluster")
     @ResponseBody
     public ResponseEntity clusterPOIs () {
@@ -29,6 +28,7 @@ public class AnalysisController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
     @GetMapping("/rankPOI")
     @ResponseBody
     public ResponseEntity rankPOIs ()   {
@@ -50,5 +50,4 @@ public class AnalysisController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
 }

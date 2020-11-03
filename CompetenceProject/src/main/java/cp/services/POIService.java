@@ -21,7 +21,6 @@ public class POIService {
     private final POIRepository poiRepository;
 
     public POI add(POI poi) {
-        System.out.println(poi);
         return poiRepository.insert(poi);
     }
 

@@ -18,6 +18,7 @@ public class AnalysisService {
     public void clusterPOIs () throws Exception {
         throw new Exception("Clustering not implemented");
     }
+
     /**
      * Rank POIs by ??
      */
