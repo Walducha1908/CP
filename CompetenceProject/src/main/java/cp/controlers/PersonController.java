@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class PersonController {
@@ -18,6 +20,12 @@ public class PersonController {
     @ResponseBody
     public ResponseEntity add(@RequestBody Person person) {
         return ResponseEntity.ok(personService.add(person));
+    }
+
+    @PostMapping("/person/batch")
+    @ResponseBody
+    public ResponseEntity addBatch(@RequestBody List<Person> persons) {
+        return ResponseEntity.ok(personService.addBatch(persons));
     }
 
     @GetMapping("/person/{id}")
@@ -54,5 +62,10 @@ public class PersonController {
         } catch (PersonNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
+    }
+    @DeleteMapping("/personDeleteAll")
+    @ResponseBody
+    public ResponseEntity clearCollection() {
+        return ResponseEntity.ok(personService.clearCollection());
     }
 }

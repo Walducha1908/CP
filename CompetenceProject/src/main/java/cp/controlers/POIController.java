@@ -5,11 +5,14 @@ import cp.dto.PersonDto;
 import cp.exceptions.POINotFoundException;
 import cp.exceptions.PersonNotFoundException;
 import cp.model.POI;
+import cp.model.Person;
 import cp.services.POIService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -20,6 +23,12 @@ public class POIController {
     @ResponseBody
     public ResponseEntity add(@RequestBody POI poi) {
         return ResponseEntity.ok(poiService.add(poi));
+    }
+
+    @PostMapping("/person/batch")
+    @ResponseBody
+    public ResponseEntity addBatch(@RequestBody List<POI> pois) {
+        return ResponseEntity.ok(poiService.addBatch(pois));
     }
 
     @GetMapping("/poi/{id}")
@@ -56,5 +65,10 @@ public class POIController {
         } catch (POINotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
+    }
+    @DeleteMapping("/poiDeleteAll")
+    @ResponseBody
+    public ResponseEntity clearCollection() {
+        return ResponseEntity.ok(poiService.clearCollection());
     }
 }

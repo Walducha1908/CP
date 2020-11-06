@@ -32,6 +32,11 @@ public class POIService {
         throw new POINotFoundException();
     }
 
+    public String addBatch(List<POI> pois) {
+        pois.forEach(poiRepository::insert);
+        return "Added batch pois";
+    }
+
     public List<POI> getAll() {
         return poiRepository.findAll();
     }
@@ -47,5 +52,10 @@ public class POIService {
         POI poiFromDB = get(id);
         poiRepository.delete(poiFromDB);
         return poiFromDB;
+    }
+
+    public String clearCollection() {
+        poiRepository.deleteAll();
+        return "Cleared collection POIs";
     }
 }
