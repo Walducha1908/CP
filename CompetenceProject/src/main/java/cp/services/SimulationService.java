@@ -41,7 +41,7 @@ public class SimulationService {
             traces.forEach(trace -> traceService.addTrace(trace));
         }
 
-        throw new Exception("Simulation not implemented");
+        //throw new Exception("Simulation not implemented");
     }
 
     private List<Trace> getTraceList(Person person, List<POI> poiList) {
@@ -50,21 +50,23 @@ public class SimulationService {
         POI currentPoint = getRandomPOI(poiList);
         for (int i = 0; i < 20; i++) {
             POI newPoint = getRandomPOI(poiList);
-            while (!newPoint.equals(currentPoint)) {
+            while (newPoint.equals(currentPoint)) {
                 newPoint = getRandomPOI(poiList);
             }
             int timeTravel = getRandomMinutesTravel();
             int timeOnPlace = getRandomMinutesOnPlace();
-            beginDate.plusMinutes(timeTravel);
+            beginDate = beginDate.plusMinutes(timeTravel);
 
             Trace trace = new Trace();
             trace.setPoiId(currentPoint.getId());
             trace.setUserId(person.getId());
             trace.setTimeOfEntry(beginDate);
-            beginDate.plusMinutes(timeOnPlace);
+            beginDate = beginDate.plusMinutes(timeOnPlace);
+            trace.setTimeOfExit(beginDate);
             result.add(trace);
             currentPoint = newPoint;
-            if(beginDate.isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 0, 0, 0)))){
+            log.info(trace.toString());
+            if (beginDate.isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 0, 0, 0)))) {
                 break;
             }
         }

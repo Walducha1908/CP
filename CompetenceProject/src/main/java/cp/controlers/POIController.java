@@ -25,7 +25,7 @@ public class POIController {
         return ResponseEntity.ok(poiService.add(poi));
     }
 
-    @PostMapping("/person/batch")
+    @PostMapping("/poi/batch")
     @ResponseBody
     public ResponseEntity addBatch(@RequestBody List<POI> pois) {
         return ResponseEntity.ok(poiService.addBatch(pois));
