@@ -10,6 +10,12 @@ public class POIMapper {
                 .description(poi.getDescription())
                 .position(poi.getPosition())
                 .type(poi.getType())
+                .studentA(poi.getStudentA())
+                .studentB(poi.getStudentB())
+                .teacherA(poi.getTeacherA())
+                .teacherB(poi.getTeacherB())
+                .stuffA(poi.getStuffA())
+                .stuffB(poi.getStuffB())
                 .build();
     }
 
@@ -19,6 +25,12 @@ public class POIMapper {
                 .description(poiDto.getDescription())
                 .position(poiDto.getPosition())
                 .type(poiDto.getType())
+                .studentA(poiDto.getStudentA())
+                .studentB(poiDto.getStudentB())
+                .teacherA(poiDto.getTeacherA())
+                .teacherB(poiDto.getTeacherB())
+                .stuffA(poiDto.getStuffA())
+                .stuffB(poiDto.getStuffB())
                 .build();
     }
 }

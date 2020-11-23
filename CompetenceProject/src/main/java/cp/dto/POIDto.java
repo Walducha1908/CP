@@ -11,4 +11,10 @@ public @Data class POIDto {
     public String description;
     public GeoJsonPoint position;
     public PlaceType type;
+    public Double studentA;
+    public Double studentB;
+    public Double teacherA;
+    public Double teacherB;
+    public Double stuffA;
+    public Double stuffB;
 }
