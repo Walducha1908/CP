@@ -30,7 +30,7 @@ public class PersonController {
 
     @GetMapping("/person/{id}")
     @ResponseBody
-    public ResponseEntity get(@PathVariable String id) {
+    public ResponseEntity update(@PathVariable String id) {
         try {
             return ResponseEntity.ok(personService.get(id));
         } catch (PersonNotFoundException ex) {
@@ -46,7 +46,7 @@ public class PersonController {
 
     @PutMapping("/person/{id}")
     @ResponseBody
-    public ResponseEntity get(@PathVariable String id, @RequestBody PersonDto personDto) {
+    public ResponseEntity update(@PathVariable String id, @RequestBody PersonDto personDto) {
         try {
             return ResponseEntity.ok(personService.update(id, personDto));
         } catch (PersonNotFoundException ex) {

@@ -38,7 +38,6 @@ public class SimulationService {
             List<Trace> traces = getTraceList(person, poiList);
             traces.forEach(trace -> traceService.addTrace(trace));
         }
-
     }
 
     private List<Trace> getTraceList(Person person, List<POI> poiList) {

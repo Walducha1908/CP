@@ -31,7 +31,7 @@ Example JSON
  */
 /* Geo json point
 https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/core/geo/GeoJsonPoint.html
-studentA, studentB etc are weibull distribution probability density function https://en.wikipedia.org/wiki/Weibull_distribution
+studentA, studentB etc are weibull distribution parameters (probability density function) https://en.wikipedia.org/wiki/Weibull_distribution
  */
 
 @Document(collection = "POIs")
