@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -40,12 +37,38 @@ public class AnalysisController {
         }
     }
 
-    @GetMapping("/calculateVisited")
+    @GetMapping("/calculateVisited/{id}")
     @ResponseBody
-    public ResponseEntity calculateMostVisited(POI givenPoi) {
+    public ResponseEntity calculateMostVisited(@PathVariable String id) {
         try {
-            analysisService.calculateMostVisited(givenPoi);
-            return ResponseEntity.ok("jest ok ale zajrzyj co robisz");
+            return ResponseEntity.ok(analysisService.calculateMostVisited(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    @GetMapping("/calculateVisited/students/{id}")
+    @ResponseBody
+    public ResponseEntity calculateMostVisitedByStudents(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(analysisService.calculateMostVisitedByStudents(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    @GetMapping("/calculateVisited/teachers/{id}")
+    @ResponseBody
+    public ResponseEntity calculateMostVisitedByTeachers(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(analysisService.calculateMostVisitedByTeachers(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    @GetMapping("/calculateVisited/servicestaff/{id}")
+    @ResponseBody
+    public ResponseEntity calculateMostVisitedByServiceStaff(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(analysisService.calculateMostVisitedByServiceStaff(id));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
