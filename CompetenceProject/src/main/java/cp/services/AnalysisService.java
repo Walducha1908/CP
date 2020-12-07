@@ -1,5 +1,6 @@
 package cp.services;
 
+import cp.helpers.PoiCompareTime;
 import cp.helpers.PoiCompareVisits;
 import cp.model.*;
 import lombok.AllArgsConstructor;
@@ -19,61 +20,10 @@ public class AnalysisService {
     private final POIService poiService;
     private final PersonService personService;
 
-    /**
-     * Rank POIs by the amount of time spent in poi
-     * @return
-     */
-    public LinkedList<RankedPoiTimeSpent> clusterPOILongestTime() {
-        List<Trace> traces = traceService.getAll();
-        List<POI> pois = poiService.getAll();
-        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
-        for(int i=0; i<pois.size(); i++){
-            System.out.println(i);
-            long time = 0;
-            for(int j =0; j<traces.size(); j++){
-                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
-                    if(time < Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes()) {
-                        time = Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
-                    }
-                }
-            }
-            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time));
-        }
+    //----------CLUSTERING----------
 
-        return list;
-    }
 
-    /**
-     * Analise traces/POIs
-     * By frequent users, more than 7000 users per day but less than 10000
-     * @return
-     */
-    public LinkedList<RankedPoi> clusterPOIRest() {
-        List<Trace> traces = traceService.getAll();
-        List<POI> pois = poiService.getAll();
-        LinkedList<RankedPoi> list = new LinkedList<>();
-        for(int i=0; i<pois.size(); i++){
-            System.out.println(i);
-            int count = 0;
-            for(int j =0; j<traces.size(); j++){
-                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
-                    count++;
-                }
-            }
-            list.add(new RankedPoi(pois.get(i).getName(), count));
-        }
-
-        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
-        Collections.sort(list, poiCompareVisits);
-
-        LinkedList<RankedPoi> result = new LinkedList<>();
-        for(RankedPoi rp : list){
-            if(rp.getVisits() > 7000 && rp.getVisits() < 10000){result.add(rp);}
-        }
-
-        return result;
-    }
-
+    //VISITS
     /**
      * Analise traces/POIs
      * By frequent users, less than 7000 users per day
@@ -137,6 +87,141 @@ public class AnalysisService {
     }
 
     /**
+     * Analise traces/POIs
+     * By frequent users, more than 7000 users per day but less than 10000
+     * @return
+     */
+    public LinkedList<RankedPoi> clusterPOIRest() {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoi> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                }
+            }
+            list.add(new RankedPoi(pois.get(i).getName(), count));
+        }
+
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        Collections.sort(list, poiCompareVisits);
+
+        LinkedList<RankedPoi> result = new LinkedList<>();
+        for(RankedPoi rp : list){
+            if(rp.getVisits() > 7000 && rp.getVisits() < 10000){result.add(rp);}
+        }
+
+        return result;
+    }
+
+    //TIME
+    /**
+     * Analise traces/POIs
+     * By average time spent, less than 25 minutes
+     * @return
+     */
+    public LinkedList<RankedPoiTimeSpent> clusterPOIShortestTimeSpent() {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            long time = 0;
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                    time += Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
+                }
+            }
+            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));
+        }
+
+        PoiCompareTime poiCompareTime = new PoiCompareTime();
+        Collections.sort(list, poiCompareTime);
+
+        LinkedList<RankedPoiTimeSpent> result = new LinkedList<>();
+        for(RankedPoiTimeSpent rp : list){
+            if(rp.getMinutes() <= 25){result.add(rp);}
+        }
+
+        return result;
+    }
+
+    /**
+     * Analise traces/POIs
+     * By average time spent, more than 70 minutes
+     * @return
+     */
+    public LinkedList<RankedPoiTimeSpent> clusterPOILongestTimeSpent() {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            long time = 0;
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                    time += Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
+                }
+            }
+            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));
+        }
+
+        PoiCompareTime poiCompareTime = new PoiCompareTime();
+        Collections.sort(list, poiCompareTime);
+
+        LinkedList<RankedPoiTimeSpent> result = new LinkedList<>();
+        for(RankedPoiTimeSpent rp : list){
+            if(rp.getMinutes() >= 70){result.add(rp);}
+        }
+
+        return result;
+    }
+
+    /**
+     * Analise traces/POIs
+     * By average time spent, between 25 and 70 minutes
+     * @return
+     */
+    public LinkedList<RankedPoiTimeSpent> clusterPOIAverageTimeSpent() {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            long time = 0;
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                    time += Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
+                }
+            }
+            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));
+        }
+
+        PoiCompareTime poiCompareTime = new PoiCompareTime();
+        Collections.sort(list, poiCompareTime);
+
+        LinkedList<RankedPoiTimeSpent> result = new LinkedList<>();
+        for(RankedPoiTimeSpent rp : list){
+            if(rp.getMinutes() > 25 && rp.getMinutes() < 70){result.add(rp);}
+        }
+
+        return result;
+    }
+
+
+    //----------RANKING----------
+
+
+    /**
      * Rank POIs by the number of visits per day
      * @return
      */
@@ -182,8 +267,15 @@ public class AnalysisService {
             list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));
         }
 
+        PoiCompareTime poiCompareTime = new PoiCompareTime();
+        Collections.sort(list, poiCompareTime);
+
         return list;
     }
+
+
+    //----------CALCULATING----------
+
 
     /**
      * For givenPOI ID calculate numbers of visits in other pois

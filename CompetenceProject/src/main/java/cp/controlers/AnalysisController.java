@@ -13,16 +13,11 @@ public class AnalysisController {
 
     private final AnalysisService analysisService;
 
-    @GetMapping("/cluster/Rest")
-    @ResponseBody
-    public ResponseEntity clusterPOIsRest() {
-        try {
-            return ResponseEntity.ok(analysisService.clusterPOIRest());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
 
+    //----------CLUSTERING----------
+
+
+    //VISITS
     @GetMapping("/cluster/7000")
     @ResponseBody
     public ResponseEntity clusterPOIsLessThan7000() {
@@ -43,15 +38,50 @@ public class AnalysisController {
         }
     }
 
-    @GetMapping("/cluster/topTime")
+    @GetMapping("/cluster/Rest")
     @ResponseBody
-    public ResponseEntity clusterPOIsTopTime() {
+    public ResponseEntity clusterPOIsRest() {
         try {
-            return ResponseEntity.ok(analysisService.clusterPOILongestTime());
+            return ResponseEntity.ok(analysisService.clusterPOIRest());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    //TIME
+    @GetMapping("/cluster/shortestTime")
+    @ResponseBody
+    public ResponseEntity clusterPOIsShortestTime() {
+        try {
+            return ResponseEntity.ok(analysisService.clusterPOIShortestTimeSpent());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cluster/longestTime")
+    @ResponseBody
+    public ResponseEntity clusterPOIsLongestTime() {
+        try {
+            return ResponseEntity.ok(analysisService.clusterPOILongestTimeSpent());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cluster/averageTime")
+    @ResponseBody
+    public ResponseEntity clusterPOIsAverageTime() {
+        try {
+            return ResponseEntity.ok(analysisService.clusterPOIAverageTimeSpent());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
+    //----------RANKING----------
+
 
     @GetMapping("/rankPOI/visits")
     @ResponseBody
@@ -72,6 +102,10 @@ public class AnalysisController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+
+    //----------CALCULATING----------
+
 
     @GetMapping("/calculateVisited/{id}")
     @ResponseBody
