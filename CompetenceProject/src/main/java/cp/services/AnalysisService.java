@@ -28,19 +28,20 @@ public class AnalysisService {
      * Analise traces/POIs
      * By frequent users, lengths of stay etc.
      */
-    public void clusterPOIs () throws Exception {
+    public void clusterPOIs() throws Exception {
         throw new Exception("Clustering not implemented");
     }
 
     /**
      * Rank POIs by ??
      */
-    public void rankPOIs () throws Exception {
+    public void rankPOIs() throws Exception {
         throw new Exception("Ranking not implemented");
     }
 
     /**
      * For givenPOI ID calculate numbers of visits in other pois
+     *
      * @param poiID
      * @return most visited POI
      * @throws Exception
@@ -50,40 +51,44 @@ public class AnalysisService {
 
         List<Trace> tracesForPOI = traceService.getAllWithPOIId(poiID);
 
-        for(int i = 0; i<tracesForPOI.size(); i++){
+        for (int i = 0; i < tracesForPOI.size(); i++) {
             System.out.println("poiTrace: " + i);
             String currentUserId = tracesForPOI.get(i).getUserId();
             LocalDateTime currentTime = tracesForPOI.get(i).getTimeOfEntry();
 
             List<Trace> tracesForUser = traceService.getAllWithUserId(currentUserId);
-            for(int j = 0; j<tracesForUser.size() -1; j++){
-                if(tracesForUser.get(j).getPoiId().equals(poiID) && tracesForUser.get(j).getTimeOfEntry().isEqual(currentTime)){
+            for (int j = 0; j < tracesForUser.size() - 1; j++) {
+                if (tracesForUser.get(j).getPoiId().equals(poiID) && tracesForUser.get(j).getTimeOfEntry().isEqual(currentTime)) {
                     //tutaj mamy trace z ID następnego poi do którego poszedł user z poiID
-                    Trace t = tracesForUser.get(j+1);
+                    Trace t = tracesForUser.get(j + 1);
                     ids.push(t.getPoiId());
                 }
             }
         }
         //initializing map with pois and number of visits
-        Map map = new HashMap();
+        var map = new HashMap<String, Integer>();
         List<POI> pois = poiService.getAll();
         POI currentPOI = poiService.get(poiID);
         pois.remove(currentPOI);
 
-        for(int i=0; i<pois.size(); i++){
+        for (POI poi : pois) {
             int count = 0;
-            for(int j =0; j<ids.size(); j++){
-                if(pois.get(i).getId().equals(ids.get(j))){count++;}
+            for (String id : ids) {
+                if (poi.getId().equals(id)) {
+                    count++;
+                }
             }
-            map.put(pois.get(i).getName(), count);
+            map.put(poi.getName(), count);
         }
 
         System.out.println(map.toString());
 
         return map;
     }
+
     /**
      * For givenPOI ID calculate numbers of visits in other pois for students
+     *
      * @param poiID
      * @return most visited POI
      * @throws Exception
@@ -93,11 +98,11 @@ public class AnalysisService {
 
         List<Trace> tracesForPOI = traceService.getAllWithPOIId(poiID);
 
-        for(int i = 0; i<tracesForPOI.size(); i++){
+        for (int i = 0; i < tracesForPOI.size(); i++) {
             System.out.println("poiTrace: " + i);
             String currentUserId = tracesForPOI.get(i).getUserId();
             LocalDateTime currentTime = tracesForPOI.get(i).getTimeOfEntry();
-            if(personService.get(currentUserId).getProfile() == Profile.students) {
+            if (personService.get(currentUserId).getProfile() == Profile.students) {
                 List<Trace> tracesForUser = traceService.getAllWithUserId(currentUserId);
                 for (int j = 0; j < tracesForUser.size() - 1; j++) {
                     if (tracesForUser.get(j).getPoiId().equals(poiID) && tracesForUser.get(j).getTimeOfEntry().isEqual(currentTime)) {
@@ -109,17 +114,19 @@ public class AnalysisService {
             }
         }
         //initializing map with pois and number of visits
-        Map map = new HashMap();
+        var map = new HashMap<String, Integer>();
         List<POI> pois = poiService.getAll();
         POI currentPOI = poiService.get(poiID);
         pois.remove(currentPOI);
 
-        for(int i=0; i<pois.size(); i++){
+        for (POI poi : pois) {
             int count = 0;
-            for(int j =0; j<ids.size(); j++){
-                if(pois.get(i).getId().equals(ids.get(j))){count++;}
+            for (String id : ids) {
+                if (poi.getId().equals(id)) {
+                    count++;
+                }
             }
-            map.put(pois.get(i).getName(), count);
+            map.put(poi.getName(), count);
         }
 
         System.out.println(map.toString());
@@ -129,6 +136,7 @@ public class AnalysisService {
 
     /**
      * For givenPOI ID calculate numbers of visits in other pois for teachers
+     *
      * @param poiID
      * @return most visited POI
      * @throws Exception
@@ -138,11 +146,11 @@ public class AnalysisService {
 
         List<Trace> tracesForPOI = traceService.getAllWithPOIId(poiID);
 
-        for(int i = 0; i<tracesForPOI.size(); i++){
+        for (int i = 0; i < tracesForPOI.size(); i++) {
             System.out.println("poiTrace: " + i);
             String currentUserId = tracesForPOI.get(i).getUserId();
             LocalDateTime currentTime = tracesForPOI.get(i).getTimeOfEntry();
-            if(personService.get(currentUserId).getProfile() == Profile.teachers) {
+            if (personService.get(currentUserId).getProfile() == Profile.teachers) {
                 List<Trace> tracesForUser = traceService.getAllWithUserId(currentUserId);
                 for (int j = 0; j < tracesForUser.size() - 1; j++) {
                     if (tracesForUser.get(j).getPoiId().equals(poiID) && tracesForUser.get(j).getTimeOfEntry().isEqual(currentTime)) {
@@ -154,25 +162,29 @@ public class AnalysisService {
             }
         }
         //initializing map with pois and number of visits
-        Map map = new HashMap();
+        var map = new HashMap<String, Integer>();
         List<POI> pois = poiService.getAll();
         POI currentPOI = poiService.get(poiID);
         pois.remove(currentPOI);
 
-        for(int i=0; i<pois.size(); i++){
+        for (POI poi : pois) {
             int count = 0;
-            for(int j =0; j<ids.size(); j++){
-                if(pois.get(i).getId().equals(ids.get(j))){count++;}
+            for (String id : ids) {
+                if (poi.getId().equals(id)) {
+                    count++;
+                }
             }
-            map.put(pois.get(i).getName(), count);
+            map.put(poi.getName(), count);
         }
 
         System.out.println(map.toString());
 
         return map;
     }
+
     /**
      * For givenPOI ID calculate numbers of visits in other pois for service staff
+     *
      * @param poiID
      * @return most visited POI
      * @throws Exception
@@ -182,11 +194,11 @@ public class AnalysisService {
 
         List<Trace> tracesForPOI = traceService.getAllWithPOIId(poiID);
 
-        for(int i = 0; i<tracesForPOI.size(); i++){
+        for (int i = 0; i < tracesForPOI.size(); i++) {
             System.out.println("poiTrace: " + i);
             String currentUserId = tracesForPOI.get(i).getUserId();
             LocalDateTime currentTime = tracesForPOI.get(i).getTimeOfEntry();
-            if(personService.get(currentUserId).getProfile() == Profile.serviceStaff) {
+            if (personService.get(currentUserId).getProfile() == Profile.serviceStaff) {
                 List<Trace> tracesForUser = traceService.getAllWithUserId(currentUserId);
                 for (int j = 0; j < tracesForUser.size() - 1; j++) {
                     if (tracesForUser.get(j).getPoiId().equals(poiID) && tracesForUser.get(j).getTimeOfEntry().isEqual(currentTime)) {
@@ -198,17 +210,19 @@ public class AnalysisService {
             }
         }
         //initializing map with pois and number of visits
-        Map map = new HashMap();
+        var map = new HashMap<String, Integer>();
         List<POI> pois = poiService.getAll();
         POI currentPOI = poiService.get(poiID);
         pois.remove(currentPOI);
 
-        for(int i=0; i<pois.size(); i++){
+        for (POI poi : pois) {
             int count = 0;
-            for(int j =0; j<ids.size(); j++){
-                if(pois.get(i).getId().equals(ids.get(j))){count++;}
+            for (String id : ids) {
+                if (poi.getId().equals(id)) {
+                    count++;
+                }
             }
-            map.put(pois.get(i).getName(), count);
+            map.put(poi.getName(), count);
         }
 
         System.out.println(map.toString());
