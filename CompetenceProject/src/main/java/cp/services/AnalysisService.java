@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 
@@ -20,6 +18,30 @@ public class AnalysisService {
     private final TraceService traceService;
     private final POIService poiService;
     private final PersonService personService;
+
+    /**
+     * Rank POIs by the amount of time spent in poi
+     * @return
+     */
+    public LinkedList<RankedPoiTimeSpent> clusterPOILongestTime() {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            long time = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    if(time < Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes()) {
+                        time = Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
+                    }
+                }
+            }
+            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time));
+        }
+
+        return list;
+    }
 
     /**
      * Analise traces/POIs
@@ -154,9 +176,7 @@ public class AnalysisService {
             for(int j =0; j<traces.size(); j++){
                 if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
                     count++;
-                    System.out.println("Iterator: " + count);
                     time += Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
-                    System.out.println("Time: " + time);
                 }
             }
             list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));

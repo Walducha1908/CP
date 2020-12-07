@@ -43,6 +43,16 @@ public class AnalysisController {
         }
     }
 
+    @GetMapping("/cluster/topTime")
+    @ResponseBody
+    public ResponseEntity clusterPOIsTopTime() {
+        try {
+            return ResponseEntity.ok(analysisService.clusterPOILongestTime());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/rankPOI/visits")
     @ResponseBody
     public ResponseEntity rankPOIsVisits ()   {
