@@ -68,4 +68,20 @@ public class PersonController {
     public ResponseEntity clearCollection() {
         return ResponseEntity.ok(personService.clearCollection());
     }
+
+    @PutMapping("/personAnonymizePhoneAll")
+    @ResponseBody
+    public ResponseEntity update() {
+        return ResponseEntity.ok(personService.anonymizePhoneNumbers());
+    }
+
+    @GetMapping("/person/realPhoneNumber/{id}")
+    @ResponseBody
+    public ResponseEntity get(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(personService.getRealPhoneNumber(id));
+        } catch (PersonNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
 }
