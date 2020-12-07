@@ -1,11 +1,9 @@
 package cp.controlers;
 
-import cp.model.POI;
 import cp.services.AnalysisService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,23 +13,51 @@ public class AnalysisController {
 
     private final AnalysisService analysisService;
 
-    @GetMapping("/cluster")
+    @GetMapping("/cluster/Rest")
     @ResponseBody
-    public ResponseEntity clusterPOIs () {
+    public ResponseEntity clusterPOIsRest() {
         try {
-            analysisService.clusterPOIs();
-            return ResponseEntity.ok("jest ok ale zajrzyj co robisz");
+            return ResponseEntity.ok(analysisService.clusterPOIRest());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @GetMapping("/rankPOI")
+    @GetMapping("/cluster/7000")
     @ResponseBody
-    public ResponseEntity rankPOIs ()   {
+    public ResponseEntity clusterPOIsLessThan7000() {
         try {
-            analysisService.rankPOIs();
-            return ResponseEntity.ok("jest ok ale zajrzyj co robisz");
+            return ResponseEntity.ok(analysisService.clusterPOIsLessThan7000());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cluster/10000")
+    @ResponseBody
+    public ResponseEntity clusterPOIsMoreThan10000() {
+        try {
+            return ResponseEntity.ok(analysisService.clusterPOIsMoreThan10000());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/rankPOI/visits")
+    @ResponseBody
+    public ResponseEntity rankPOIsVisits ()   {
+        try {
+            return ResponseEntity.ok(analysisService.rankPOIsVisits());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/rankPOI/time")
+    @ResponseBody
+    public ResponseEntity rankPOIsTime ()   {
+        try {
+            return ResponseEntity.ok(analysisService.rankPOIsVisits());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

@@ -1,19 +1,16 @@
 package cp.services;
 
-import cp.controlers.TraceController;
+import cp.helpers.PoiCompareVisits;
 import cp.model.POI;
-import cp.model.Person;
 import cp.model.Profile;
+import cp.model.RankedPoi;
 import cp.model.Trace;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -26,17 +23,129 @@ public class AnalysisService {
 
     /**
      * Analise traces/POIs
-     * By frequent users, lengths of stay etc.
+     * By frequent users, more than 7000 users per day but less than 10000
+     * @return
      */
-    public void clusterPOIs() throws Exception {
-        throw new Exception("Clustering not implemented");
+    public LinkedList<RankedPoi> clusterPOIRest() throws Exception {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoi> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                }
+            }
+            list.add(new RankedPoi(pois.get(i).getName(), count));
+        }
+
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        Collections.sort(list, poiCompareVisits);
+
+        LinkedList<RankedPoi> result = new LinkedList<>();
+        for(RankedPoi rp : list){
+            if(rp.getVisits() > 7000 && rp.getVisits() < 10000){result.add(rp);}
+        }
+
+        return result;
     }
 
     /**
-     * Rank POIs by ??
+     * Analise traces/POIs
+     * By frequent users, less than 7000 users per day
+     * @return
      */
-    public void rankPOIs() throws Exception {
-        throw new Exception("Ranking not implemented");
+    public LinkedList<RankedPoi> clusterPOIsLessThan7000() throws Exception {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoi> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                }
+            }
+            list.add(new RankedPoi(pois.get(i).getName(), count));
+        }
+
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        Collections.sort(list, poiCompareVisits);
+
+        LinkedList<RankedPoi> result = new LinkedList<>();
+        for(RankedPoi rp : list){
+            if(rp.getVisits() <= 7000){result.add(rp);}
+        }
+
+        return result;
+    }
+
+    /**
+     * Analise traces/POIs
+     * By frequent users, more than 10000 users per day
+     * @return
+     */
+    public LinkedList<RankedPoi> clusterPOIsMoreThan10000() throws Exception {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoi> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                }
+            }
+            list.add(new RankedPoi(pois.get(i).getName(), count));
+        }
+
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        Collections.sort(list, poiCompareVisits);
+
+        LinkedList<RankedPoi> result = new LinkedList<>();
+        for(RankedPoi rp : list){
+            if(rp.getVisits() >= 10000){result.add(rp);}
+        }
+
+        return result;
+    }
+
+    /**
+     * Rank POIs by the number of visits per day
+     * @return
+     */
+    public LinkedList<RankedPoi> rankPOIsVisits() throws Exception {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoi> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                }
+            }
+            list.add(new RankedPoi(pois.get(i).getName(), count));
+        }
+
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        Collections.sort(list, poiCompareVisits);
+
+        return list;
+    }
+
+    /**
+     * Rank POIs by the amount of time spent in poi
+     * @return
+     */
+    public LinkedList<RankedPoi> rankPOIsTimes() throws Exception {
+        List<Trace> traces = traceService.getAll();
+        List<POI> pois = poiService.getAll();
     }
 
     /**
