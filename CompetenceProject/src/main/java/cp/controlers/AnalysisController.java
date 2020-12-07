@@ -57,7 +57,7 @@ public class AnalysisController {
     @ResponseBody
     public ResponseEntity rankPOIsTime ()   {
         try {
-            return ResponseEntity.ok(analysisService.rankPOIsVisits());
+            return ResponseEntity.ok(analysisService.rankPOIsTimes());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

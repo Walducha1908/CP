@@ -1,15 +1,15 @@
 package cp.services;
 
 import cp.helpers.PoiCompareVisits;
-import cp.model.POI;
-import cp.model.Profile;
-import cp.model.RankedPoi;
-import cp.model.Trace;
+import cp.model.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 
@@ -26,7 +26,7 @@ public class AnalysisService {
      * By frequent users, more than 7000 users per day but less than 10000
      * @return
      */
-    public LinkedList<RankedPoi> clusterPOIRest() throws Exception {
+    public LinkedList<RankedPoi> clusterPOIRest() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
         LinkedList<RankedPoi> list = new LinkedList<>();
@@ -57,7 +57,7 @@ public class AnalysisService {
      * By frequent users, less than 7000 users per day
      * @return
      */
-    public LinkedList<RankedPoi> clusterPOIsLessThan7000() throws Exception {
+    public LinkedList<RankedPoi> clusterPOIsLessThan7000() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
         LinkedList<RankedPoi> list = new LinkedList<>();
@@ -88,7 +88,7 @@ public class AnalysisService {
      * By frequent users, more than 10000 users per day
      * @return
      */
-    public LinkedList<RankedPoi> clusterPOIsMoreThan10000() throws Exception {
+    public LinkedList<RankedPoi> clusterPOIsMoreThan10000() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
         LinkedList<RankedPoi> list = new LinkedList<>();
@@ -118,7 +118,7 @@ public class AnalysisService {
      * Rank POIs by the number of visits per day
      * @return
      */
-    public LinkedList<RankedPoi> rankPOIsVisits() throws Exception {
+    public LinkedList<RankedPoi> rankPOIsVisits() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
         LinkedList<RankedPoi> list = new LinkedList<>();
@@ -143,9 +143,26 @@ public class AnalysisService {
      * Rank POIs by the amount of time spent in poi
      * @return
      */
-    public LinkedList<RankedPoi> rankPOIsTimes() throws Exception {
+    public LinkedList<RankedPoiTimeSpent> rankPOIsTimes() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
+        LinkedList<RankedPoiTimeSpent> list = new LinkedList<>();
+        for(int i=0; i<pois.size(); i++){
+            System.out.println(i);
+            long time = 0;
+            int count = 0;
+            for(int j =0; j<traces.size(); j++){
+                if(pois.get(i).getId().equals(traces.get(j).getPoiId())){
+                    count++;
+                    System.out.println("Iterator: " + count);
+                    time += Duration.between(traces.get(j).getTimeOfEntry(), traces.get(j).getTimeOfExit()).toMinutes();
+                    System.out.println("Time: " + time);
+                }
+            }
+            list.add(new RankedPoiTimeSpent(pois.get(i).getName(), time/count));
+        }
+
+        return list;
     }
 
     /**
