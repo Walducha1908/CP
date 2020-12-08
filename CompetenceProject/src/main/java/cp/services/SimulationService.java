@@ -5,8 +5,10 @@ import cp.model.Person;
 import cp.model.Profile;
 import cp.model.Trace;
 
+import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.apache.commons.math3.distribution.WeibullDistribution;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ public class SimulationService {
     private final TraceService traceService;
     private final POIService poiService;
     private final PersonService personService;
+    private List<Pair<Integer, Integer>> times_stay;
+    private List<Pair<Integer, Integer>> times_travel;
 
     /**
      * Method responsible for running simulation.
@@ -33,10 +37,16 @@ public class SimulationService {
         traceService.deleteAll();
         List<Person> personList = personService.getAll();
         List<POI> poiList = poiService.getAll();
+        times_stay = new ArrayList<>();
+        times_travel = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            times_travel.add(new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 2, 4), convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25)));
+            times_stay.add(new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25), convertValue(ThreadLocalRandom.current().nextGaussian(), 80, 100)));
+        }
 
         for (Person person : personList) {
             List<Trace> traces = getTraceList(person, poiList);
-            traces.forEach(trace -> traceService.addTrace(trace));
+            traces.forEach(traceService::addTrace);
         }
     }
 
@@ -45,10 +55,12 @@ public class SimulationService {
         LocalDateTime beginDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(6, 0, 0, 0));
         Collections.shuffle(poiList);
         POI currentPoint = poiList.get(0);
+        Collections.shuffle(times_stay);
+        Collections.shuffle(times_travel);
         for (int i = 0; i < 20; i++) {
             POI newPoint = getNextPOI(currentPoint, poiList, person, beginDate);
-            int timeTravel = getRandomMinutesTravel();
-            int timeOnPlace = getRandomMinutesOnPlace();
+            int timeTravel = getRandomMinutesTravel(times_travel.get(i));
+            int timeOnPlace = getRandomMinutesOnPlace(times_stay.get(i));
             beginDate = beginDate.plusMinutes(timeTravel);
 
             Trace trace = new Trace();
@@ -111,11 +123,20 @@ public class SimulationService {
         return weibullDistribution.density(time);
     }
 
-    private int getRandomMinutesTravel() {
-        return ThreadLocalRandom.current().nextInt(3, 20 + 1);
+    private int getRandomMinutesTravel(Pair<Integer, Integer> min_max) {
+        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getKey(), min_max.getValue());
+        //return ThreadLocalRandom.current().nextInt(3, 20 + 1);
     }
 
-    private int getRandomMinutesOnPlace() {
-        return ThreadLocalRandom.current().nextInt(15, 90 + 1);
+    private int getRandomMinutesOnPlace(Pair<Integer, Integer> min_max) {
+        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getKey(), min_max.getValue());
+        //return ThreadLocalRandom.current().nextInt(15, 90 + 1);
+    }
+
+    private int convertValue(double old_value, double new_min, double new_max) {
+        double old_min = -1;
+        double old_max = 1;
+        var new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min;
+        return (int) new_value;
     }
 }

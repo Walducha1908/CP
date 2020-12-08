@@ -1,4 +1,4 @@
-Add package cp.model;
+package cp.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
