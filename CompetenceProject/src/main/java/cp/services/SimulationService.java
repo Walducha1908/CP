@@ -5,11 +5,10 @@ import cp.model.Person;
 import cp.model.Profile;
 import cp.model.Trace;
 
-import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.apache.commons.math3.distribution.WeibullDistribution;
+import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -124,19 +123,19 @@ public class SimulationService {
     }
 
     private int getRandomMinutesTravel(Pair<Integer, Integer> min_max) {
-        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getKey(), min_max.getValue());
+        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getValue0(), min_max.getValue1());
         //return ThreadLocalRandom.current().nextInt(3, 20 + 1);
     }
 
     private int getRandomMinutesOnPlace(Pair<Integer, Integer> min_max) {
-        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getKey(), min_max.getValue());
+        return convertValue(ThreadLocalRandom.current().nextGaussian(), min_max.getValue0(), min_max.getValue1());
         //return ThreadLocalRandom.current().nextInt(15, 90 + 1);
     }
 
     private int convertValue(double old_value, double new_min, double new_max) {
         double old_min = -1;
         double old_max = 1;
-        var new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min;
+        double new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min;
         return (int) new_value;
     }
 }
