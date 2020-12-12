@@ -25,28 +25,24 @@ public class SimulationService {
     private final POIService poiService;
     private final PersonService personService;
     private HashMap<String, Pair<Integer, Integer>> times_stay;
-    private List<Pair<Integer, Integer>> times_travel;
+    private HashMap<String, Pair<Integer, Integer>> times_travel;
 
     /**
      * Method responsible for running simulation.
-     *
-     * @throws Exception
      */
-    public void runSimulation() throws Exception {
+    public void runSimulation() {
         traceService.deleteAll();
         List<Person> personList = personService.getAll();
         List<POI> poiList = poiService.getAll();
         times_stay = new HashMap<>();
-        times_travel = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            times_travel.add(new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 2, 4), convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25)));
-        }
+        times_travel = new HashMap<>();
         poiList.forEach(item -> times_stay.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25), convertValue(ThreadLocalRandom.current().nextGaussian(), 80, 100))));
+        poiList.forEach(item -> times_travel.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 2, 4), convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25))));
 
-        for (Person person : personList) {
+        personList.parallelStream().forEach(person -> {
             List<Trace> traces = getTraceList(person, poiList);
-            traces.forEach(traceService::addTrace);
-        }
+            traceService.addTrace(traces);
+        });
     }
 
     private List<Trace> getTraceList(Person person, List<POI> poiList) {
@@ -54,10 +50,9 @@ public class SimulationService {
         LocalDateTime beginDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(6, 0, 0, 0));
         Collections.shuffle(poiList);
         POI currentPoint = poiList.get(0);
-        Collections.shuffle(times_travel);
         for (int i = 0; i < 20; i++) {
             POI newPoint = getNextPOI(currentPoint, poiList, person, beginDate);
-            int timeTravel = getRandomMinutesTravel(times_travel.get(i));
+            int timeTravel = getRandomMinutesTravel(times_travel.get(newPoint.getId()));
             int timeOnPlace = getRandomMinutesOnPlace(times_stay.get(newPoint.getId()));
             beginDate = beginDate.plusMinutes(timeTravel);
 

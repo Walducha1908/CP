@@ -23,6 +23,10 @@ public class TraceService {
         return traceRepository.insert(trace);
     }
 
+    public List<Trace> addTrace(List<Trace> traces) {
+        return traceRepository.insert(traces);
+    }
+
     public Trace get(String id) throws TraceNotFoundException {
         if (traceRepository.findById(id).isPresent()) {
             log.debug(traceRepository.findById(id).get().toString());
