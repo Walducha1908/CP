@@ -24,7 +24,7 @@ public class SimulationService {
     private final TraceService traceService;
     private final POIService poiService;
     private final PersonService personService;
-    private List<Pair<Integer, Integer>> times_stay;
+    private HashMap<String, Pair<Integer, Integer>> times_stay;
     private List<Pair<Integer, Integer>> times_travel;
 
     /**
@@ -36,12 +36,12 @@ public class SimulationService {
         traceService.deleteAll();
         List<Person> personList = personService.getAll();
         List<POI> poiList = poiService.getAll();
-        times_stay = new ArrayList<>();
+        times_stay = new HashMap<>();
         times_travel = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             times_travel.add(new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 2, 4), convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25)));
-            times_stay.add(new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25), convertValue(ThreadLocalRandom.current().nextGaussian(), 80, 100)));
         }
+        poiList.forEach(item -> times_stay.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25), convertValue(ThreadLocalRandom.current().nextGaussian(), 80, 100))));
 
         for (Person person : personList) {
             List<Trace> traces = getTraceList(person, poiList);
@@ -54,12 +54,11 @@ public class SimulationService {
         LocalDateTime beginDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(6, 0, 0, 0));
         Collections.shuffle(poiList);
         POI currentPoint = poiList.get(0);
-        Collections.shuffle(times_stay);
         Collections.shuffle(times_travel);
         for (int i = 0; i < 20; i++) {
             POI newPoint = getNextPOI(currentPoint, poiList, person, beginDate);
             int timeTravel = getRandomMinutesTravel(times_travel.get(i));
-            int timeOnPlace = getRandomMinutesOnPlace(times_stay.get(i));
+            int timeOnPlace = getRandomMinutesOnPlace(times_stay.get(newPoint.getId()));
             beginDate = beginDate.plusMinutes(timeTravel);
 
             Trace trace = new Trace();

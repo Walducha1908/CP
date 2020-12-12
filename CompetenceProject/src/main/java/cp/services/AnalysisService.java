@@ -5,7 +5,6 @@ import cp.helpers.PoiCompareVisits;
 import cp.model.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
