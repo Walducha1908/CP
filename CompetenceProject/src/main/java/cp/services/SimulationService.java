@@ -36,11 +36,12 @@ public class SimulationService {
         List<POI> poiList = poiService.getAll();
         times_stay = new HashMap<>();
         times_travel = new HashMap<>();
-        poiList.forEach(item -> times_stay.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25), convertValue(ThreadLocalRandom.current().nextGaussian(), 80, 100))));
+        //poiList.forEach(item -> times_stay.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 50), convertValue(ThreadLocalRandom.current().nextGaussian(), 60, 100))));
+        poiList.forEach(item -> times_stay.put(item.getId(), new Pair<>(getRandomNormal(10, 60), getRandomNormal(60, 100))));
         poiList.forEach(item -> times_travel.put(item.getId(), new Pair<>(convertValue(ThreadLocalRandom.current().nextGaussian(), 2, 4), convertValue(ThreadLocalRandom.current().nextGaussian(), 15, 25))));
 
         personList.parallelStream().forEach(person -> {
-            List<Trace> traces = getTraceList(person, poiList);
+            List<Trace> traces = getTraceList(person, new ArrayList<>(poiList));
             traceService.addTrace(traces);
         });
     }
@@ -131,5 +132,9 @@ public class SimulationService {
         double old_max = 1;
         double new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min;
         return (int) new_value;
+    }
+
+    private int getRandomNormal(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max);
     }
 }

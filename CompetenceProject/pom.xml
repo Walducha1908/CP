@@ -20,7 +20,7 @@
     </properties>
 
     <dependencies>
-    <!-- Mongo-->
+        <!-- Mongo-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -40,7 +40,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-<!--        google json-->
+        <!--        google json-->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
