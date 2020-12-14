@@ -2,6 +2,7 @@ package cp.services;
 
 import cp.dto.PersonDto;
 import cp.exceptions.PersonNotFoundException;
+import cp.helpers.CipherHelper;
 import cp.model.Person;
 import cp.model.PhoneNumberMask;
 import cp.model.mappers.PersonMapper;
@@ -9,6 +10,8 @@ import cp.repositories.PersonRepository;
 import cp.repositories.PhoneMaskRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +27,9 @@ public class PersonService {
     private final PhoneMaskRepository phoneMaskRepository;
 
     private static Random random = new Random();
+
+    @Autowired
+    private Environment env;
 
     public Person add(Person person) {
         return personRepository.insert(person);
@@ -68,25 +74,42 @@ public class PersonService {
         if (personRepository.findById(id).isPresent()) {
             Person person = personRepository.findById(id).get();
 
-            return phoneMaskRepository.findByFakePhoneNumber(person.getPhoneNumber()).getPhoneNumber();
+            String aes_key = env.getProperty("AES_KEY");
+
+            try {
+                return CipherHelper.decrypt(phoneMaskRepository.findByFakePhoneNumber(person.getPhoneNumber()).getPhoneNumber(), aes_key);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            log.error("Person with id: " + id + " not found");
+            throw new PersonNotFoundException("Person not found");
         }
-        log.error("Person with id: " + id + " not found");
-        throw new PersonNotFoundException("Person not found");
+
+        log.error("Error occurred getting real phone number for person with id: " + id);
+        throw new PersonNotFoundException("Error occurred getting real phone number for person with id: " + id);
     }
 
     public String anonymizePhoneNumbers() {
+
+
         phoneMaskRepository.deleteAll();
 
         List<Person> persons = getAll();
         List<PhoneNumberMask> phoneNumberMaskList = new ArrayList<>();
 
+        String aes_key = env.getProperty("AES_KEY");
 
         for (Person person : persons
         ) {
             String fakePhoneNumber = generateFakeUniquePhoneNumber(10, persons);
-            phoneNumberMaskList.add(new PhoneNumberMask(UUID.randomUUID().toString(),
-                    person.getPhoneNumber(),
-                    fakePhoneNumber));
+            try {
+                phoneNumberMaskList.add(new PhoneNumberMask(UUID.randomUUID().toString(),
+                        CipherHelper.encrypt(person.getPhoneNumber(), aes_key),
+                        fakePhoneNumber));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             person.setPhoneNumber(fakePhoneNumber);
         }
 
@@ -105,13 +128,13 @@ public class PersonService {
 
             for (Person person : persons
             ) {
-                if(randomNumber.equals(person.getPhoneNumber())){
+                if (randomNumber.equals(person.getPhoneNumber())) {
                     duplicateFound = true;
                     break;
                 }
             }
 
-            if(!duplicateFound)
+            if (!duplicateFound)
                 return randomNumber;
         }
     }
