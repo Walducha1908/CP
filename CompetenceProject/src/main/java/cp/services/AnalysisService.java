@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,31 +33,10 @@ public class AnalysisService {
      * @return
      */
     public LinkedList<RankedPoi> clusterPOIsLessThan7000() {
-        List<Trace> traces = traceService.getAll();
-        List<POI> pois = poiService.getAll();
-        LinkedList<RankedPoi> list = new LinkedList<>();
-        for (int i = 0; i < pois.size(); i++) {
-            System.out.println(i);
-            int count = 0;
-            for (int j = 0; j < traces.size(); j++) {
-                if (pois.get(i).getId().equals(traces.get(j).getPoiId())) {
-                    count++;
-                }
-            }
-            list.add(new RankedPoi(pois.get(i).getName(), count));
-        }
-
+        List<RankedPoi> ranged_pois = this.getRankedPoiByVisitation();
         PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
-        Collections.sort(list, poiCompareVisits);
-
-        LinkedList<RankedPoi> result = new LinkedList<>();
-        for (RankedPoi rp : list) {
-            if (rp.getVisits() <= 7000) {
-                result.add(rp);
-            }
-        }
-
-        return result;
+        ranged_pois.sort(poiCompareVisits);
+        return (LinkedList<RankedPoi>) ranged_pois.stream().filter(item -> item.getVisits() <= 7000).collect(Collectors.toList());
     }
 
     /**
@@ -66,6 +46,11 @@ public class AnalysisService {
      * @return
      */
     public LinkedList<RankedPoi> clusterPOIsMoreThan10000() {
+        List<RankedPoi> ranged_pois = this.getRankedPoiByVisitation();
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        ranged_pois.sort(poiCompareVisits);
+        return (LinkedList<RankedPoi>) ranged_pois.stream().filter(item -> item.getVisits() >= 10000).collect(Collectors.toList());
+        /*
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
         LinkedList<RankedPoi> list = new LinkedList<>();
@@ -90,7 +75,7 @@ public class AnalysisService {
             }
         }
 
-        return result;
+        return result;*/
     }
 
     /**
@@ -100,32 +85,50 @@ public class AnalysisService {
      * @return
      */
     public LinkedList<RankedPoi> clusterPOIRest() {
+
+        List<RankedPoi> ranged_pois = this.getRankedPoiByVisitation();
+        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+        ranged_pois.sort(poiCompareVisits);
+        return (LinkedList<RankedPoi>) ranged_pois.stream().filter(item -> item.getVisits() < 10000 && item.getVisits() > 7000).collect(Collectors.toList());
+//
+//        List<Trace> traces = traceService.getAll();
+//        List<POI> pois = poiService.getAll();
+//        LinkedList<RankedPoi> list = new LinkedList<>();
+//        for (int i = 0; i < pois.size(); i++) {
+//            System.out.println(i);
+//            int count = 0;
+//            for (int j = 0; j < traces.size(); j++) {
+//                if (pois.get(i).getId().equals(traces.get(j).getPoiId())) {
+//                    count++;
+//                }
+//            }
+//            list.add(new RankedPoi(pois.get(i).getName(), count));
+//        }
+//
+//        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
+//        Collections.sort(list, poiCompareVisits);
+//
+//        LinkedList<RankedPoi> result = new LinkedList<>();
+//        for (RankedPoi rp : list) {
+//            if (rp.getVisits() > 7000 && rp.getVisits() < 10000) {
+//                result.add(rp);
+//            }
+//        }
+//
+//        return result;
+    }
+
+    private List<RankedPoi> getRankedPoiByVisitation() {
         List<Trace> traces = traceService.getAll();
         List<POI> pois = poiService.getAll();
-        LinkedList<RankedPoi> list = new LinkedList<>();
-        for (int i = 0; i < pois.size(); i++) {
-            System.out.println(i);
-            int count = 0;
-            for (int j = 0; j < traces.size(); j++) {
-                if (pois.get(i).getId().equals(traces.get(j).getPoiId())) {
-                    count++;
-                }
-            }
-            list.add(new RankedPoi(pois.get(i).getName(), count));
-        }
-
-        PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
-        Collections.sort(list, poiCompareVisits);
-
         LinkedList<RankedPoi> result = new LinkedList<>();
-        for (RankedPoi rp : list) {
-            if (rp.getVisits() > 7000 && rp.getVisits() < 10000) {
-                result.add(rp);
-            }
+        for (POI poi : pois) {
+            List<Trace> traces_filtered = traces.stream().filter(item -> item.getPoiId().equals(poi.getId())).collect(Collectors.toList());
+            result.add(new RankedPoi(poi.getName(), traces_filtered.size()));
         }
-
         return result;
     }
+
 
     //TIME
 
