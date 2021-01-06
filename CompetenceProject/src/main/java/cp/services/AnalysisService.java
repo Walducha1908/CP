@@ -85,7 +85,6 @@ public class AnalysisService {
      * @return
      */
     public LinkedList<RankedPoi> clusterPOIRest() {
-
         List<RankedPoi> ranged_pois = this.getRankedPoiByVisitation();
         PoiCompareVisits poiCompareVisits = new PoiCompareVisits();
         ranged_pois.sort(poiCompareVisits);
