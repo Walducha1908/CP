@@ -1,0 +1,337 @@
+[{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6295f"
+  },
+  "name": "Bike park",
+  "description": "deserunt do mollit occaecat sit Lorem tempor fugiat qui nostrud",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      17,
+      39
+    ]
+  },
+  "type": "outdoor",
+  "studentA": 10,
+  "studentB": 8,
+  "teacherA": 10,
+  "teacherB": 10,
+  "stuffA": 3,
+  "stuffB": 10,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62960"
+  },
+  "name": "Restroom Language Center",
+  "description": "velit enim id do reprehenderit duis ipsum non fugiat ad",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      34,
+      24
+    ]
+  },
+  "type": "indoor",
+  "studentA": 4,
+  "studentB": 12,
+  "teacherA": 6,
+  "teacherB": 18,
+  "stuffA": 5,
+  "stuffB": 13,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62961"
+  },
+  "name": "Sport Club",
+  "description": "elit consequat sunt culpa do nostrud deserunt tempor cillum non",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      11,
+      9
+    ]
+  },
+  "type": "indoor",
+  "studentA": 17,
+  "studentB": 18,
+  "teacherA": 6,
+  "teacherB": 18,
+  "stuffA": 5,
+  "stuffB": 13,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62962"
+  },
+  "name": "Lecture Lodex",
+  "description": "enim nulla cillum laborum fugiat aute ea laborum ipsum proident",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      1,
+      25
+    ]
+  },
+  "type": "indoor",
+  "studentA": 20,
+  "studentB": 10,
+  "teacherA": 10,
+  "teacherB": 10,
+  "stuffA": 16,
+  "stuffB": 16,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62963"
+  },
+  "name": "Restroom Library",
+  "description": "tempor aute ullamco dolor enim quis aliquip sunt magna ipsum",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      41,
+      40
+    ]
+  },
+  "type": "indoor",
+  "studentA": 10,
+  "studentB": 14,
+  "teacherA": 6,
+  "teacherB": 15,
+  "stuffA": 3,
+  "stuffB": 15,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62964"
+  },
+  "name": "Language Center",
+  "description": "quis tempor nulla exercitation laboris aute elit eu nulla aute",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      32,
+      18
+    ]
+  },
+  "type": "indoor",
+  "studentA": 9,
+  "studentB": 11,
+  "teacherA": 8,
+  "teacherB": 11,
+  "stuffA": 15,
+  "stuffB": 17,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62965"
+  },
+  "name": "Library",
+  "description": "do in excepteur consectetur cupidatat duis voluptate sit id laborum",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      36,
+      40
+    ]
+  },
+  "type": "indoor",
+  "studentA": 16,
+  "studentB": 14,
+  "teacherA": 8,
+  "teacherB": 16,
+  "stuffA": 4,
+  "stuffB": 16,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62966"
+  },
+  "name": "Xero",
+  "description": "dolore ullamco esse pariatur elit et aliquip aliqua sunt aliquip",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      49,
+      26
+    ]
+  },
+  "type": "indoor",
+  "studentA": 8,
+  "studentB": 9,
+  "teacherA": 8,
+  "teacherB": 8,
+  "stuffA": 5,
+  "stuffB": 14,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62967"
+  },
+  "name": "Lab 2 Phisic",
+  "description": "aute reprehenderit anim eu aute voluptate enim elit officia magna",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      27,
+      42
+    ]
+  },
+  "type": "indoor",
+  "studentA": 10,
+  "studentB": 16,
+  "teacherA": 7,
+  "teacherB": 16,
+  "stuffA": 10,
+  "stuffB": 20,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62968"
+  },
+  "name": "Lab 1 CTI",
+  "description": "ut nulla qui proident magna exercitation ullamco magna et qui",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      21,
+      42
+    ]
+  },
+  "type": "indoor",
+  "studentA": 10,
+  "studentB": 16,
+  "teacherA": 7,
+  "teacherB": 16,
+  "stuffA": 10,
+  "stuffB": 20,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc62969"
+  },
+  "name": "ATM",
+  "description": "eiusmod dolore consequat duis esse ad nisi sunt consequat sint",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      46,
+      46
+    ]
+  },
+  "type": "outdoor",
+  "studentA": 6,
+  "studentB": 14,
+  "teacherA": 6,
+  "teacherB": 14,
+  "stuffA": 6,
+  "stuffB": 14,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6296a"
+  },
+  "name": "Auditorium 1 CTI",
+  "description": "consectetur dolor et magna ea non non ut proident incididunt",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      21,
+      38
+    ]
+  },
+  "type": "indoor",
+  "studentA": 20,
+  "studentB": 10,
+  "teacherA": 10,
+  "teacherB": 10,
+  "stuffA": 16,
+  "stuffB": 16,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6296b"
+  },
+  "name": "Dean's Office",
+  "description": "reprehenderit aliqua minim quis dolore duis esse id nulla est",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      2,
+      48
+    ]
+  },
+  "type": "indoor",
+  "studentA": 8,
+  "studentB": 11,
+  "teacherA": 8,
+  "teacherB": 13,
+  "stuffA": 5,
+  "stuffB": 13,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6296c"
+  },
+  "name": "Bike park",
+  "description": "ipsum ut consequat officia fugiat qui adipisicing consectetur enim duis",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      22,
+      30
+    ]
+  },
+  "type": "outdoor",
+  "studentA": 10,
+  "studentB": 8,
+  "teacherA": 10,
+  "teacherB": 10,
+  "stuffA": 3,
+  "stuffB": 10,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6296d"
+  },
+  "name": "Cafeteria",
+  "description": "id Lorem esse reprehenderit aliquip excepteur sit ad esse incididunt",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      4,
+      30
+    ]
+  },
+  "type": "indoor",
+  "studentA": 10,
+  "studentB": 12,
+  "teacherA": 15,
+  "teacherB": 12,
+  "stuffA": 7,
+  "stuffB": 12,
+  "_class": "cp.model.POI"
+},{
+  "_id": {
+    "$oid": "5fba61b88f9036336fc6296e"
+  },
+  "name": "Restaurant",
+  "description": "consectetur consequat aliqua incididunt reprehenderit quis aliquip elit eiusmod ea",
+  "position": {
+    "type": "Point",
+    "coordinates": [
+      49,
+      50
+    ]
+  },
+  "type": "outdoor",
+  "studentA": 13,
+  "studentB": 14,
+  "teacherA": 16,
+  "teacherB": 14,
+  "stuffA": 8,
+  "stuffB": 14,
+  "_class": "cp.model.POI"
+}]

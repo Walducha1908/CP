@@ -1,0 +1,17 @@
+_id,name,description,position.type,position.coordinates,type,studentA,studentB,teacherA,teacherB,stuffA,stuffB,_class
+5fba61b88f9036336fc6295f,Bike park,deserunt do mollit occaecat sit Lorem tempor fugiat qui nostrud,Point,"[17,39]",outdoor,10,8,10,10,3,10,cp.model.POI
+5fba61b88f9036336fc62960,Restroom Language Center,velit enim id do reprehenderit duis ipsum non fugiat ad,Point,"[34,24]",indoor,4,12,6,18,5,13,cp.model.POI
+5fba61b88f9036336fc62961,Sport Club,elit consequat sunt culpa do nostrud deserunt tempor cillum non,Point,"[11,9]",indoor,17,18,6,18,5,13,cp.model.POI
+5fba61b88f9036336fc62962,Lecture Lodex,enim nulla cillum laborum fugiat aute ea laborum ipsum proident,Point,"[1,25]",indoor,20,10,10,10,16,16,cp.model.POI
+5fba61b88f9036336fc62963,Restroom Library,tempor aute ullamco dolor enim quis aliquip sunt magna ipsum,Point,"[41,40]",indoor,10,14,6,15,3,15,cp.model.POI
+5fba61b88f9036336fc62964,Language Center,quis tempor nulla exercitation laboris aute elit eu nulla aute,Point,"[32,18]",indoor,9,11,8,11,15,17,cp.model.POI
+5fba61b88f9036336fc62965,Library,do in excepteur consectetur cupidatat duis voluptate sit id laborum,Point,"[36,40]",indoor,16,14,8,16,4,16,cp.model.POI
+5fba61b88f9036336fc62966,Xero,dolore ullamco esse pariatur elit et aliquip aliqua sunt aliquip,Point,"[49,26]",indoor,8,9,8,8,5,14,cp.model.POI
+5fba61b88f9036336fc62967,Lab 2 Phisic,aute reprehenderit anim eu aute voluptate enim elit officia magna,Point,"[27,42]",indoor,10,16,7,16,10,20,cp.model.POI
+5fba61b88f9036336fc62968,Lab 1 CTI,ut nulla qui proident magna exercitation ullamco magna et qui,Point,"[21,42]",indoor,10,16,7,16,10,20,cp.model.POI
+5fba61b88f9036336fc62969,ATM,eiusmod dolore consequat duis esse ad nisi sunt consequat sint,Point,"[46,46]",outdoor,6,14,6,14,6,14,cp.model.POI
+5fba61b88f9036336fc6296a,Auditorium 1 CTI,consectetur dolor et magna ea non non ut proident incididunt,Point,"[21,38]",indoor,20,10,10,10,16,16,cp.model.POI
+5fba61b88f9036336fc6296b,"Dean's Office",reprehenderit aliqua minim quis dolore duis esse id nulla est,Point,"[2,48]",indoor,8,11,8,13,5,13,cp.model.POI
+5fba61b88f9036336fc6296c,Bike park,ipsum ut consequat officia fugiat qui adipisicing consectetur enim duis,Point,"[22,30]",outdoor,10,8,10,10,3,10,cp.model.POI
+5fba61b88f9036336fc6296d,Cafeteria,id Lorem esse reprehenderit aliquip excepteur sit ad esse incididunt,Point,"[4,30]",indoor,10,12,15,12,7,12,cp.model.POI
+5fba61b88f9036336fc6296e,Restaurant,consectetur consequat aliqua incididunt reprehenderit quis aliquip elit eiusmod ea,Point,"[49,50]",outdoor,13,14,16,14,8,14,cp.model.POI
