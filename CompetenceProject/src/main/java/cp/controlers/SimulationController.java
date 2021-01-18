@@ -18,7 +18,7 @@ public class SimulationController {
     public ResponseEntity run() {
         try {
             simulationService.runSimulation();
-            return ResponseEntity.ok("jest ok ale zajrzyj co robisz");
+            return ResponseEntity.ok("Simulation finished. Check results in DB or Analysis service");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
