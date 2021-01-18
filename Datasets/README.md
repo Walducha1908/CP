@@ -8,12 +8,12 @@ Datasets folder contains exported data from database when running the project. T
     * **description** - description of POI
     * **position** - Geoposition of POI
     * **type** - place type
-    * **studentA** - Weibull coefficients determining the probability of a visit
-    * **studentB** - Weibull coefficients determining the probability of a visit
-    * **teacherA** - Weibull coefficients determining the probability of a visit
-    * **teacherB** - Weibull coefficients determining the probability of a visit
-    * **stuffA** - Weibull coefficients determining the probability of a visit
-    * **stuffB** - Weibull coefficients determining the probability of a visit
+    * **studentA** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) first coefficient determining the probability of a visit for students
+    * **studentB** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) second coefficient determining the probability of a visit for students
+    * **teacherA** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) first coefficient determining the probability of a visit for teachers
+    * **teacherB** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) second coefficient determining the probability of a visit for teachers
+    * **stuffA** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) first coefficient determining the probability of a visit for stuff
+    * **stuffB** - [Weibull](https://en.wikipedia.org/wiki/Weibull_distribution) second coefficient determining the probability of a visit for stuff
 
 2. `Persons` - contains data about persons
     * **phoneNumber** - masked phoneNumber
